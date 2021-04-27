@@ -6,7 +6,9 @@ const helmet = require("helmet");
 const { NODE_ENV } = require('./config')
 const validateBearerToken = require('./middleware/bearer-token')
 const errorHandler = require('./middleware/error-handler')
-
+const authRouter = require('./routes/auth-router')
+const authRouter = require('./routes/orders-router')
+const authRouter = require('./routes/products-router')
 const app = express();
 
 const morganSetting = process.env.NODE_ENV === 'production' ? 'tiny' : 'common'
@@ -17,8 +19,9 @@ app.use(cors());
 app.use(errorHandler)
 app.use(validateBearerToken);
 
-app.get("/", (req, res) => {
-  res.send("Hello, world!");
-});
+app.use("/api/auth", authRouter);
+app.use("/api/orders", authRouter);
+app.use("/api/products", authRouter);
+
 
 module.exports = app;
