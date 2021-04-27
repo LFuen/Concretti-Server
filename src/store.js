@@ -24,9 +24,9 @@ const phases = [
     'In Production', 
     'Produced', 
     'In Stock'
-]
+];
 
-export {
+module.exports =  {
     colors, 
     phases
 }

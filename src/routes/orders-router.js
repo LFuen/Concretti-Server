@@ -1,5 +1,5 @@
 const express = require("express");
-const OrdersService = require("./orders-service");
+const OrdersService = require("../services/orders-service");
 const jsonParser = express.json();
 const ordersRouter = express.Router();
 const path = require("path");
