@@ -2,13 +2,13 @@ const jwt = require("jsonwebtoken");
 const { JWT_SECRET } = require("../config");
 
 const AuthService = {
-  getUser(db, user_name) {
-    return db("users").where({user_name}).first();
+  getUser(db, user_department) {
+    return db("users").where({user_department}).first();
   },
 
   createJWT(user) {
     return jwt.sign({ user_id: user.user_id }, JWT_SECRET, {
-      subject: user.user_name,
+      subject: user.user_department,
       algorithm: "HS256",
     });
   },
