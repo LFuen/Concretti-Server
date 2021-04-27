@@ -9,3 +9,11 @@ psql -U lili -d concretti -f ./migrations/002.do.create_products.sql
 psql -U lili -d concretti -f ./migrations/003.do.create_orders.sql
 
 psql -U lili -d concretti -f ./seeds/seed.tables.sql
+
+
+
+
+# to run file type: ./migrateAndSeed.sh in terminal
+# cahnge user name to whatever username you're using for your db role and db name if you created a db 
+# with a name other than 'concretti' 
+# after creation of this file, include it in the gitignore file so it doesn't upload again
