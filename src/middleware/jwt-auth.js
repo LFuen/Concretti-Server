@@ -3,7 +3,6 @@ const AuthService = require("../services/auth-service");
 function requireAuth(req, res, next) {
   const authToken = req.get("Authorization") || "";
   let token;
-
   //validate authToken
   //remove 'bearer ' and set JSON web token to var called token
   if (!authToken.toLowerCase().startsWith("bearer ")) {
