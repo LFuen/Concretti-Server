@@ -44,7 +44,7 @@ ordersRouter
   .delete(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
     const { id } = res.order;
-    ordersService.deleteOrder(db, id)
+    OrdersService.deleteOrder(db, id)
       .then(() => res.status(204).end())
       .catch(next);
   })
