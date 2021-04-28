@@ -22,12 +22,14 @@ const OrdersService = {
         else return order;
       });
   },
-  deleteOrder(db, id) {
-    return db("orders").where({ id }).delete();
+  deleteOrder(db, order_id) {
+    console.log(order_id, "THIS IS IN DELETE ORDER")
+    return db("orders").where({ order_id }).delete();
   },
-  updateOrder(db, id, newOrderInfo) {
+  updateOrder(db, order_id, newOrderInfo) {
+
     return db("orders")
-      .where({ id })
+      .where({ order_id })
       .update({ ...newOrderInfo })
       .returning("*")
       .then((rows) => rows[0])
@@ -42,7 +44,7 @@ const OrdersService = {
   }
   ,
   serializeOrder(order) {
-    console.log(order, "SERIALIZED ORDER")
+
     return {
       ...order,
       color: xss(order.color),

@@ -43,20 +43,28 @@ ordersRouter
   })
   .delete(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { id } = res.order;
-    ordersService.deleteOrder(db, id)
+    // const { id } = req.params;
+    OrdersService.deleteOrder(db, req.params.orderId)
       .then(() => res.status(204).end())
       .catch(next);
   })
   .patch(requireAuth, jsonParser, (req, res, next) => {
+
     const db = req.app.get("db");
     const { product_id, color, amount, prty_lvl, phase } = req.body;
     const newInfo = { product_id, color, amount, prty_lvl, phase };
-    if ( !product_id && !color && !amount && !prty_lvl && !phase )
+
+    for(let info in newInfo){
+      if(newInfo[info] === undefined ){
+        delete newInfo[info]
+      }
+    }
+    if ( !product_id && !color && !amount && prty_lvl === undefined && !phase )
       return res
         .status(400)
         .json({ error: "Must update at least one required field" });
-    OrdersService.updateOrder(db, res.order.id, newInfo)
+
+    OrdersService.updateOrder(db, req.params.orderId, newInfo)
       .then((order) => {
         return res.status(200).json(order);
       })
@@ -66,6 +74,7 @@ ordersRouter
 async function checkOrderExists(req, res, next) {
   try {
     const orderId = req.params.orderId;
+    console.log(orderId,"CHECK ORDER EXISTS")
     const db = req.app.get("db");
     const order = await OrdersService.getOrderById(db, orderId);
     if (!order)
