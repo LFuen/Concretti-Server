@@ -1,5 +1,6 @@
 module.exports = {
     PORT: process.env.PORT || 8000,
+    JWT_SECRET: 'secretkey',
     NODE_ENV: process.env.NODE_ENV || 'development',
     CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000',
     DATABASE_URL:
