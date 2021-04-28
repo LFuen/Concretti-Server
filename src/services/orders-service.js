@@ -31,8 +31,16 @@ const OrdersService = {
       .update({ ...newOrderInfo })
       .returning("*")
       .then((rows) => rows[0])
-      .then((order) => OrdersService.getOrderById(db, order.id));
+      .then((order) => {
+        if (!!order) return OrdersService.serializeOrder(order);
+        else return order;
+      });
   },
+  getAllOrders(db) {
+    return db("orders")
+    .select('*')
+  }
+  ,
   serializeOrder(order) {
     console.log(order, "SERIALIZED ORDER")
     return {
