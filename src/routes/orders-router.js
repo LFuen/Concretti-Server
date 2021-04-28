@@ -30,7 +30,7 @@ ordersRouter.route("/")
 })
 .get((req, res, next) => {
     OrdersService.getAllOrders(req.app.get("db")).then(orders =>
-     res.status.json(orders)
+     res.status(200).json(orders)
     )
 })
 
