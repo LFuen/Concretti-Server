@@ -37,8 +37,7 @@ const OrdersService = {
     console.log(order, "SERIALIZED ORDER")
     return {
       ...order,
-      color: xss(order.title),
-      phase: xss(order.content),
+      color: xss(order.color),
     };
   },
 };
