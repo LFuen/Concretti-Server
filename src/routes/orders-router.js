@@ -15,7 +15,7 @@ ordersRouter.route("/")
   const { product, color, amount } = req.body;
   const phase = "In Production";
   const prty_lvl = 0;
-  if ( !product_id || !color || !amount )
+  if ( !product || !color || !amount )
     return res.status(400).json({ error: "Missing required fields" });
   if (!colors.includes(color)) return res.status(400).json({ error: "Inavalid Color" });
   const order = { product, color, amount, prty_lvl, phase };

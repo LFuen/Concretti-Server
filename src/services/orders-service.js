@@ -1,11 +1,11 @@
 const xss = require("xss");
 
 const OrdersService = {
-  getOrderById(db, id) {
+  getOrderById(db, order_id) {
     return db("orders")
       .select("*")
       .where({ order_id })
-      .first()
+      .then((rows) => rows[0])
       .then((order) => {
         if (!!order) return OrdersService.serializeOrder(order);
         else return order;
@@ -17,7 +17,10 @@ const OrdersService = {
       .into("orders")
       .returning("*")
       .then((rows) => rows[0])
-      .then((order) => OrdersService.getOrderById(db, order.id));
+      .then((order) => {
+        if (!!order) return OrdersService.serializeOrder(order);
+        else return order;
+      });
   },
   deleteOrder(db, id) {
     return db("orders").where({ id }).delete();
@@ -31,6 +34,7 @@ const OrdersService = {
       .then((order) => OrdersService.getOrderById(db, order.id));
   },
   serializeOrder(order) {
+    console.log(order, "SERIALIZED ORDER")
     return {
       ...order,
       color: xss(order.title),
