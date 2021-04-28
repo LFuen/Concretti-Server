@@ -16,10 +16,10 @@ function requireAuth(req, res, next) {
   //if match is found, append user creds to request
   //otherwise, return 401 and error message
   try {
+
     const payload = AuthService.verifyJWT(token);
     console.log(payload)
     return AuthService.getUser(req.app.get("db"), payload.sub).then((user) => {
-      console.log(user)
       if (!user) return res.status(401).json({ error: "Unauthorized" });
       req.user = user;
       next();
