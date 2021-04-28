@@ -9,13 +9,15 @@ const {colors, phases} = require('../store')
 
 
 
-ordersRouter.route("/").post(jsonParser, (req, res, next) => {
+ordersRouter.route("/")
+.post(jsonParser, (req, res, next) => {
   const db = req.app.get("db");
-  const { product_id, color, amount, prty_lvl, phase } = req.body;
-  if ( !product_id || !color || !amount || !prty_lvl || !phase )
+  const { product_id, color, amount } = req.body;
+  const phase = "In Production";
+  const prty_lvl = 0;
+  if ( !product_id || !color || !amount )
     return res.status(400).json({ error: "Missing required fields" });
   if (!colors.includes(color)) return res.status(400).json({ error: "Inavalid Color" });
-  if (!phases.includes(phase)) return res.status(400).json({ error: "Inavalid Phase" });
   const order = { product_id, color, amount, prty_lvl, phase };
   OrdersService.insertOrder(db, order)
     .then((order) =>
