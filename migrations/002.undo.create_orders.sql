@@ -1,4 +1,4 @@
+DROP TABLE IF EXISTS orders;
 DROP TYPE color;
 DROP TYPE product;
 DROP TYPE phase;
-DROP TABLE IF EXISTS orders;
