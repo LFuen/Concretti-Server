@@ -10,8 +10,8 @@ ordersRouter
   .route("/")
   .post(jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { next_order, product, color, amount } = req.body;
-    const phase = "In Production";
+    const { phase, next_order, product, color, amount } = req.body;
+    if (!phase) phase = "In Production";
     const prty_lvl = 0;
     if (!product || !color || !amount)
       return res.status(400).json({ error: "Missing required fields" });
