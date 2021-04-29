@@ -33,32 +33,14 @@ ordersRouter
     );
   });
 
-// ordersRouter
-//   .route("/levels/:sourceOrder")
-//   .patch(requireAuth, jsonParser, async (req, res, next) => {
-//     const db = req.app.get("db");
-//     const { amount } = req.body;
-//     const { product, color, prty_lvl, phase } = req.body;
-//     const newInfo = { product, color, prty_lvl, phase };
-//     if (!amount)
-//       return res.status(400).json({ message: "Must change the amount" });
-//     let advOrder = await OrdersService.getBySourceOrder(
-//       db,
-//       req.params.sourceOrder
-//     );
-//     if (!!advOrder) {
-//       advOrder = await OrdersService.updateLevel(db, {
-//         amount: advOrder.amount + 1,
-//       });
-//     } else {
-//       advOrder = await OrdersService.insertOrder(db, {
-//         ...newInfo,
-//         source_order: req.params.sourceOrder,
-//         amount: 1,
-//       });
-//     }
-//     return res.status(200).json(newAdvOrder)
-//   });
+ordersRouter
+  .route("/levels/:nextOrder")
+  .patch(requireAuth, jsonParser, async (req, res, next) => {
+    const db = req.app.get("db");
+    let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder)
+    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, nextOrder.amount + 1)
+    return res.status(200).json(nextOrder)
+  });
 
 ordersRouter
   .route("/:orderId")
