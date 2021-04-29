@@ -10,14 +10,14 @@ ordersRouter
   .route("/")
   .post(jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { product, color, amount } = req.body;
+    const { next_order, product, color, amount } = req.body;
     const phase = "In Production";
     const prty_lvl = 0;
     if (!product || !color || !amount)
       return res.status(400).json({ error: "Missing required fields" });
     if (!colors.includes(color))
       return res.status(400).json({ error: "Inavalid Color" });
-    const order = { product, color, amount, prty_lvl, phase };
+    const order = { next_order, product, color, amount, prty_lvl, phase };
     OrdersService.insertOrder(db, order)
       .then((order) =>
         res
@@ -57,8 +57,8 @@ ordersRouter
   })
   .patch(requireAuth, jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { product, color, amount, prty_lvl, phase } = req.body;
-    const newInfo = { product, color, amount, prty_lvl, phase };
+    const { next_order, product, color, amount, prty_lvl, phase } = req.body;
+    const newInfo = { next_order, product, color, amount, prty_lvl, phase };
 
     for (let info in newInfo) {
       if (newInfo[info] === undefined) {
