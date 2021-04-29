@@ -65,7 +65,7 @@ ordersRouter
         delete newInfo[info];
       }
     }
-    if (!product_id && !color && !amount && prty_lvl === undefined && !phase)
+    if (!product && !color && !amount && prty_lvl === undefined && !phase)
       return res
         .status(400)
         .json({ error: "Must update at least one required field" });
