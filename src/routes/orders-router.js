@@ -38,7 +38,7 @@ ordersRouter
   .patch(requireAuth, jsonParser, async (req, res, next) => {
     const db = req.app.get("db");
     let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder)
-    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, nextOrder.amount + 1)
+    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, {amount: nextOrder.amount + 1})
     return res.status(200).json(nextOrder)
   });
 
@@ -65,7 +65,7 @@ ordersRouter
         delete newInfo[info];
       }
     }
-    if (!product_id && !color && !amount && prty_lvl === undefined && !phase)
+    if (!product && !color && !amount && prty_lvl === undefined && !phase)
       return res
         .status(400)
         .json({ error: "Must update at least one required field" });

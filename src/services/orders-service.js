@@ -47,7 +47,6 @@ const OrdersService = {
     return db("orders").where({ order_id }).delete();
   },
   updateOrder(db, order_id, newOrderInfo) {
-
     return db("orders")
       .where({ order_id })
       .update({ ...newOrderInfo })
