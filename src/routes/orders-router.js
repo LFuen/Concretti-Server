@@ -44,14 +44,6 @@ ordersRouter
     return res.status(200).json(nextOrder);
   });
 
-ordersRouter
-.route("/single/:orderId")
-  .all(checkOrderExists)
-  .patch((req, res, next) => {
-    const db = req.app.get("db");
-    const { orderId } = req.params;
-    return OrdersService.deleteSingleOrder(db, orderId).then((order) => res.status(200).json(order));
-  });
 
 ordersRouter
   .route("/:orderId")
