@@ -1,14 +1,14 @@
 #!/bin/bash
 
 
-psql -U lili -d concretti -f ./migrations/002.undo.create_orders.sql
-psql -U lili -d concretti -f ./migrations/001.undo.create_users.sql
+psql -U postgres -d concretti -f ./migrations/002.undo.create_orders.sql
+psql -U postgres -d concretti -f ./migrations/001.undo.create_users.sql
 
-psql -U lili -d concretti -f ./migrations/001.do.create_users.sql
-psql -U lili -d concretti -f ./migrations/002.do.create_orders.sql
+psql -U postgres -d concretti -f ./migrations/001.do.create_users.sql
+psql -U postgres -d concretti -f ./migrations/002.do.create_orders.sql
 
 
-psql -U lili -d concretti -f ./seeds/seed.tables.sql
+psql -U postgres -d concretti -f ./seeds/seed.tables.sql
 
 
 
