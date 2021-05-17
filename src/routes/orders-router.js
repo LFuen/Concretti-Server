@@ -44,12 +44,13 @@ ordersRouter
     return res.status(200).json(nextOrder);
   });
 
-ordersRouter("/single/:id")
+ordersRouter
+.route("/single/:id")
   .all(checkOrderExists)
   .delete((req, res, next) => {
     const db = req.app.get("db");
     const { id } = req.params;
-    OrdersService.deleteSingleOrder(db, id).then((order) => res.status(204).end());
+    return OrdersService.deleteSingleOrder(db, id).then((order) => res.status(204).end());
   });
 
 ordersRouter
