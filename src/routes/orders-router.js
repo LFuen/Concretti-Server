@@ -37,9 +37,19 @@ ordersRouter
   .route("/levels/:nextOrder")
   .patch(requireAuth, jsonParser, async (req, res, next) => {
     const db = req.app.get("db");
-    let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder)
-    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, {amount: nextOrder.amount + 1})
-    return res.status(200).json(nextOrder)
+    let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder);
+    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, {
+      amount: nextOrder.amount + 1,
+    });
+    return res.status(200).json(nextOrder);
+  });
+
+ordersRouter("/single/:id")
+  .all(checkOrderExists)
+  .delete((req, res, next) => {
+    const db = req.app.get("db");
+    const { id } = req.params;
+    OrdersService.deleteSingleOrder(db, id).then((order) => res.status(204).end());
   });
 
 ordersRouter

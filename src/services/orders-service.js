@@ -43,9 +43,15 @@ const OrdersService = {
       });
   },
   deleteOrder(db, order_id) {
-    console.log(order_id, "THIS IS IN DELETE ORDER")
+    // console.log(order_id, "THIS IS IN DELETE ORDER")
     return db("orders").where({ order_id }).delete();
   },
+ async deleteSingleOrder(db, order_id) {
+    const currentOrder = await db("orders").select('amount').where({order_id})
+    if (currentOrder[0].amount === 1) return db("orders").where({order_id}).delete()
+    return db("orders").update( {amount: currentOrder[0].amount - 1} ).returning('*')
+  }
+  ,
   updateOrder(db, order_id, newOrderInfo) {
     return db("orders")
       .where({ order_id })
