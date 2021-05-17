@@ -48,7 +48,7 @@ const OrdersService = {
   },
  async deleteSingleOrder(db, order_id) {
     const currentOrder = await db("orders").select('amount').where({order_id})
-    return db("orders").where({order_id}).update( {amount: currentOrder[0].amount - 1} ).returning('*')
+    return await db("orders").where({order_id}).update( {amount: currentOrder[0].amount - 1} ).returning('*')
   }
   ,
   updateOrder(db, order_id, newOrderInfo) {
