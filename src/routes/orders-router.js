@@ -47,10 +47,10 @@ ordersRouter
 ordersRouter
 .route("/single/:orderId")
   .all(checkOrderExists)
-  .delete((req, res, next) => {
+  .patch((req, res, next) => {
     const db = req.app.get("db");
     const { orderId } = req.params;
-    return OrdersService.deleteSingleOrder(db, orderId).then((order) => res.status(204).end());
+    return OrdersService.deleteSingleOrder(db, orderId).then((order) => res.status(204).json(order));
   });
 
 ordersRouter
