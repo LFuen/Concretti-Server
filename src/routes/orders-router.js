@@ -10,7 +10,7 @@ ordersRouter
   .route("/")
   .post(jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { phase, next_order, product, color, amount } = req.body;
+    let { phase, next_order, product, color, amount } = req.body;
     if (!phase) phase = "In Production";
     const prty_lvl = 0;
     if (!product || !color || !amount)
