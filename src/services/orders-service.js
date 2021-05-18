@@ -12,6 +12,17 @@ const OrdersService = {
         else return order;
       });
   },
+  getOrderByFkey(db, next_order){
+    return db("orders")
+      .select('*')
+      .where({ next_order })
+  },
+  getOrderByColorProd(db, color, product){
+    return db("orders")
+      .select('*')
+      .where( {color, product })
+      .then(rows => rows[0])
+  },
   // getBySourceOrder(db, source_order) {
   //   return db("orders")
   //     .select("*")

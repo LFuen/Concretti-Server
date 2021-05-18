@@ -33,6 +33,15 @@ ordersRouter
     );
   });
 
+  ordersRouter
+    .route("/new/:orderId")
+    .patch(requireAuth, jsonParser, async (req, res, next) => {
+      const db = req.app.get("db")
+      let currentOrder = await OrdersService.getOrderById(db, req.params.orderId);
+      let updatedOrder = await OrdersService.updateOrder(db, req.params.orderId,  { amount: currentOrder.amount + req.body.amount })
+      return res.status(200).json(updatedOrder);
+    })
+
 ordersRouter
   .route("/levels/:nextOrder")
   .patch(requireAuth, jsonParser, async (req, res, next) => {
@@ -44,6 +53,13 @@ ordersRouter
     return res.status(200).json(nextOrder);
   });
 
+ordersRouter
+  .route("/fkey/:orderId")
+  .get(async (req, res, next) => {
+    const {orderId} = req.params;
+    const order = await OrdersService.getOrderByFkey(req.app.get("db"), orderId);
+    return res.status(200).json(order)
+  })
 
 ordersRouter
   .route("/:orderId")
@@ -93,5 +109,16 @@ async function checkOrderExists(req, res, next) {
     next(error);
   }
 }
+
+  // ordersRouter
+  //   .route('/colorprod/:color/:product')
+  //   .get((req, res, next) => {
+  //     const db = req.app.get("db")
+  //     OrdersService.getOrderByColorProd(db, req.params.color, req.params.product)
+  //     .then(order => {
+  //       if (!order) return res.status.status(400).json({message: "Order Not Found"})
+  //       return res.status(200).json(order)
+  //     })
+  //   })
 
 module.exports = ordersRouter;
