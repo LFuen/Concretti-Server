@@ -43,25 +43,6 @@ ordersRouter
     })
 
 ordersRouter
-  .route("/levels/:nextOrder")
-  .patch(requireAuth, jsonParser, async (req, res, next) => {
-    const db = req.app.get("db");
-    let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder);
-    nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, {
-      amount: nextOrder.amount + 1,
-    });
-    return res.status(200).json(nextOrder);
-  });
-
-ordersRouter
-  .route("/fkey/:orderId")
-  .get(async (req, res, next) => {
-    const {orderId} = req.params;
-    const order = await OrdersService.getOrderByFkey(req.app.get("db"), orderId);
-    return res.status(200).json(order)
-  })
-
-ordersRouter
   .route("/:orderId")
   .all(checkOrderExists)
   .get((req, res, next) => {
@@ -84,7 +65,8 @@ ordersRouter
         delete newInfo[info];
       }
     }
-    if (!product && !color && !amount && prty_lvl === undefined && !phase)
+
+    if (!product && !color && amount === undefined && prty_lvl === undefined && !phase)
       return res
         .status(400)
         .json({ error: "Must update at least one required field" });
@@ -120,5 +102,25 @@ async function checkOrderExists(req, res, next) {
   //       return res.status(200).json(order)
   //     })
   //   })
+
+//   ordersRouter
+//   .route("/levels/:nextOrder")
+//   .patch(requireAuth, jsonParser, async (req, res, next) => {
+//     const db = req.app.get("db");
+//     let nextOrder = await OrdersService.getOrderById(db, req.params.nextOrder);
+//     nextOrder = await OrdersService.updateOrder(db, nextOrder.order_id, {
+//       amount: nextOrder.amount + 1,
+//     });
+//     return res.status(200).json(nextOrder);
+//   });
+
+// ordersRouter
+//   .route("/fkey/:orderId")
+//   .get(async (req, res, next) => {
+//     const {orderId} = req.params;
+//     const order = await OrdersService.getOrderByFkey(req.app.get("db"), orderId);
+//     return res.status(200).json(order)
+//   })
+
 
 module.exports = ordersRouter;
