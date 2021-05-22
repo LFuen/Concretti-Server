@@ -1,11 +1,8 @@
 module.exports = {
     PORT: process.env.PORT || 8000,
-    JWT_SECRET: 'secretkey',
+    JWT_SECRET: process.env.JWT_SECRET,
     NODE_ENV: process.env.NODE_ENV || 'development',
-    CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'http://localhost:3000', // https://concretti-application.vercel.app/
-    DATABASE_URL:
-    process.env.DATABASE_URL ||
-    "postgres://vccphtaoqwqcvc:3cad3a8d730a5fe09205c474d1aad32e4503cad8f4904ec047ddfdffc6bbf1fa@ec2-3-232-163-23.compute-1.amazonaws.com:5432/d410isepvle6gf",
-  TEST_DATABASE_URL:
-    process.env.TEST_DATABASE_URL || ''
+    CLIENT_ORIGIN: process.env.CLIENT_ORIGIN || 'https://concretti.vercel.app', // http://localhost:3000
+    DATABASE_URL: process.env.DATABASE_URL ||
+    "postgres://evkgjlqehkjzmn:fc0c115319adbd2334a3bf8baca2eeceac291bad61e0f89fea6ca07257f367b9@ec2-34-202-54-225.compute-1.amazonaws.com:5432/d8jqla0c3dh1qn",
 }
