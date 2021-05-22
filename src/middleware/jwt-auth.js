@@ -18,7 +18,6 @@ function requireAuth(req, res, next) {
   try {
 
     const payload = AuthService.verifyJWT(token);
-    console.log(payload)
     return AuthService.getUser(req.app.get("db"), payload.sub).then((user) => {
       if (!user) return res.status(401).json({ error: "Unauthorized" });
       req.user = user;

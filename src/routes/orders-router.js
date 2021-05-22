@@ -81,7 +81,6 @@ ordersRouter
 async function checkOrderExists(req, res, next) {
   try {
     const orderId = req.params.orderId;
-    console.log(orderId, "CHECK ORDER EXISTS");
     const db = req.app.get("db");
     const order = await OrdersService.getOrderById(db, orderId);
     if (!order) return res.status(400).json({ error: "Order not found" });

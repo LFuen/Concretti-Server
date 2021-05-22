@@ -54,7 +54,6 @@ const OrdersService = {
       });
   },
   deleteOrder(db, order_id) {
-    // console.log(order_id, "THIS IS IN DELETE ORDER")
     return db("orders").where({ order_id }).delete();
   },
  async deleteSingleOrder(db, order_id, amount) {
