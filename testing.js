@@ -61,28 +61,28 @@ let phaseArray = ["In Production", "Produced", "In Stock"];
 
 let orderMap = "";
 
-// for (let i = 0, h = 1; i < colors.length; i++) {
-//   for (let j = 0; j < products.length; j++) {
-//     for (let k = 0; k < phaseArray.length; k++) {
-//     orderMap += `'${colors[i]}, ${products[j]}, ${phaseArray[k]}': ${h},\n`;
-//     h++;
-//     }
-//   }
-// }
-
-// console.log(orderMap);
-
-let dataToInsert = "";
-
-for (let i = 0; i < colors.length; i++) {
+for (let i = 0, h = 1; i < colors.length; i++) {
   for (let j = 0; j < products.length; j++) {
     for (let k = 0; k < phaseArray.length; k++) {
-      dataToInsert += `('${colors[i]}', '${products[j]}', 0, 0, '${phaseArray[k]}'), \n`;
+    orderMap += `'${colors[i]}, ${products[j]}, ${phaseArray[k]}': ${h},\n`;
+    h++;
     }
   }
 }
 
-console.log(dataToInsert)
+console.log(orderMap);
+
+// let dataToInsert = "";
+
+// for (let i = 0; i < colors.length; i++) {
+//   for (let j = 0; j < products.length; j++) {
+//     for (let k = 0; k < phaseArray.length; k++) {
+//       dataToInsert += `('${colors[i]}', '${products[j]}', 0, 0, '${phaseArray[k]}'), \n`;
+//     }
+//   }
+// }
+
+// console.log(dataToInsert)
 // console.log(dataToInsert)
 
 //USE DATATOINSERT FOR BACKEND SEEDING
