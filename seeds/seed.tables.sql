@@ -10,9 +10,9 @@ select setval('orders_order_id_seq', 1, false);
 
 INSERT INTO "users" ("user_department", "user_password", "is_admin")
 VALUES
-    ('admin', '$2y$12$GdIB9QwYVi4IU7v80VydP.McTWu35tnUBGPyuWHyov0KkxAw.zgR2', true), --Admin2021
-    ('Production', '$2y$12$z1yPB1y8d8VXc2iaK2o1EO.t6eWrO7j1o3BBIEkGU3PWR7Yyzstwu', false), --Prod2021
-    ('shipping', '$2y$12$lSqp8.dC16/iBp5mOKj3ueMNt4RDXkIcVvQnQNJLTW3f.mP5NToK.', false); --Ship2021
+    ('admin', '$2a$04$dlZz4WlqaoYx0.L7ZFCcmuPeiflOwpYS29DAoZeNTQmkZtsRbP7zS', true), --Admin2021@$$
+    ('Production', '$2a$04$6xmreTNwYiA26yrOmmwYZ.gFhySiuD3zFTXinzshpbaprUG8.aOjC', false), --Prod2021@$$
+    ('shipping', '$2a$04$Wzr0xUy7ND/LTk4souQGR.P/LLEoN/zbaCCStzpcHYI51FOCOSdJi', false); --Shipping@$$
 
 INSERT INTO "orders" ("color", "product", "amount", "prty_lvl", "phase")
 VALUES 
