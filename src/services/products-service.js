@@ -1,7 +1,7 @@
 const xss = require("xss");
 
 const ProductsService = {
-  getProductById(db, id) {
+  getProductById(db, product_id) {
     return db("products")
       .select("*")
       .where({ product_id })
@@ -17,23 +17,28 @@ const ProductsService = {
       .into("products")
       .returning("*")
       .then((rows) => rows[0])
-      .then((product) => ProductsService.getProductById(db, product.id));
+      .then((product) => ProductsService.getProductById(db, product.product_id));
   },
-  deleteProduct(db, id) {
-    return db("products").where({ id }).delete();
+  deleteProduct(db, product_id) {
+    return db("products").where({ product_id }).delete();
   },
-  updateProduct(db, id, newProductInfo) {
+  updateProduct(db, product_id, newProductInfo) {
     return db("products")
-      .where({ id })
+      .where({ product_id })
       .update({ ...newProductInfo })
       .returning("*")
       .then((rows) => rows[0])
-      .then((product) => ProductsService.getProductById(db, product.id));
+      .then((product) => ProductsService.getProductById(db, product.product_id));
+  },
+  getAllProducts(db) {
+    return db("products")
+    .select('*')
+    .then(colors => colors.map(this.serializeProduct))
   },
   serializeProduct(product) {
     return {
       ...product,
-      name: xss(product.name),
+      product_name: xss(product.product_name),
     };
   },
 };

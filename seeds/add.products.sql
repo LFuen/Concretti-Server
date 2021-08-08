@@ -1,4 +1,6 @@
 BEGIN;
+
+
 INSERT INTO "orders" ("color", "product", "amount", "prty_lvl", "phase")
 VALUES 
 ('Black', 'San Diego', 0, 0, 'In Production'), 

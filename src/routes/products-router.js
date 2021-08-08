@@ -25,7 +25,7 @@ productsRouter.route("/").post(jsonParser, (req, res, next) => {
 })
 .get((req, res, next) => {
     ProductsService.getAllProducts(req.app.get("db")).then(products =>
-     res.status.json(products)
+     res.status(200).json(products)
     )
 })
 
