@@ -3,6 +3,7 @@ const xss = require("xss");
 
 const OrdersService = {
   getOrderById(db, order_id) {
+    // console.log(order_id)
     return db("orders")
       .select("*")
       .where({ order_id })
@@ -61,6 +62,7 @@ const OrdersService = {
   }
   ,
   updateOrder(db, order_id, newOrderInfo) {
+    console.log(order_id, newOrderInfo)
     return db("orders")
       .where({ order_id })
       .update({ ...newOrderInfo })
