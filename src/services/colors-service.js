@@ -22,7 +22,7 @@ const ColorsService = {
   deleteColor(db,color_id) {
     return db("colors").where({color_id }).delete();
   },
-  updateColor(db,color_id, newColorInfo) {
+  updateColor(db, color_id, newColorInfo) {
     return db("colors")
       .where({color_id })
       .update({ ...newColorInfo })

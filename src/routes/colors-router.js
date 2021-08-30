@@ -38,8 +38,8 @@ colorsRouter
   })
   .delete(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { id } = res.product;
-    colorsService.deleteColor(db, id)
+    const { color_id } = res.product;
+    colorsService.deleteColor(db, color_id)
       .then(() => res.status(204).end())
       .catch(next);
   })
@@ -51,7 +51,7 @@ colorsRouter
       return res
         .status(400)
         .json({ error: "Must update either product, title, or content" });
-    ColorsService.updateColor(db, res.product.id, newInfo)
+    ColorsService.updateColor(db, res.product.color_id, newInfo)
       .then((product) => {
         return res.status(200).json(product);
       })
