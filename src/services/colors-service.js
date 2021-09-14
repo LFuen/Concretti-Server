@@ -33,6 +33,7 @@ const ColorsService = {
   getAllColors(db) {
     return db("colors")
     .select('*')
+    .orderBy("color_name", "asc")
     .then(colors => colors.map(this.serializeColor))
   },
   serializeColor(color) {

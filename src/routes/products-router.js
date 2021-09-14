@@ -8,12 +8,13 @@ const { requireAuth } = require("../middleware/jwt-auth");
 
 
 
-productsRouter.route("/").post(jsonParser, (req, res, next) => {
+productsRouter.route("/")
+.post(jsonParser, (req, res, next) => {
   const db = req.app.get("db");
-  const { name } = req.body;
-  if (!name)
+  const { product_name, product_weight } = req.body;
+  if (!product_name || !product_weight)
     return res.status(400).json({ error: "Missing required fields" });
-  const product = { name };
+  const product = { product_name, product_weight };
   ProductsService.insertProduct(db, product)
     .then((product) =>
       res
@@ -38,20 +39,20 @@ productsRouter
   })
   .delete(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
-    const { id } = res.product;
-    productsService.deleteProduct(db, id)
+    const { product_id } = res.product;
+    ProductsService.deleteProduct(db, product_id)
       .then(() => res.status(204).end())
       .catch(next);
   })
   .patch(requireAuth, jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { name } = req.body;
-    const newInfo = { name };
-    if (!name)
+    const { product_name, product_weight } = req.body;
+    const newInfo = { product_name, product_weight };
+    if (!product_name && !product_weight)
       return res
         .status(400)
         .json({ error: "Must update either product, title, or content" });
-    ProductsService.updateProduct(db, res.product.id, newInfo)
+    ProductsService.updateProduct(db, res.product.product_id, newInfo)
       .then((product) => {
         return res.status(200).json(product);
       })

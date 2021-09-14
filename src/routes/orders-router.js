@@ -10,15 +10,7 @@ ordersRouter
   .route("/")
   .post(jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    let { phase, next_order, product, color, amount } = req.body;
-    if (!phase) phase = "In Production";
-    const prty_lvl = 0;
-    if (!product || !color || !amount)
-      return res.status(400).json({ error: "Missing required fields" });
-    if (!colors.includes(color))
-      return res.status(400).json({ error: "Inavalid Color" });
-    const order = { next_order, product, color, amount, prty_lvl, phase };
-    OrdersService.insertOrder(db, order)
+    OrdersService.insertOrder(db, req.body)
       .then((order) =>
         res
           .status(201)

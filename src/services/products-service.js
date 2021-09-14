@@ -33,6 +33,7 @@ const ProductsService = {
   getAllProducts(db) {
     return db("products")
     .select('*')
+    .orderBy('product_name', "asc")
     .then(colors => colors.map(this.serializeProduct))
   },
   serializeProduct(product) {

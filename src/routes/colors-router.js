@@ -8,10 +8,11 @@ const { requireAuth } = require("../middleware/jwt-auth");
 
 
 
-colorsRouter.route("/").post(jsonParser, (req, res, next) => {
+colorsRouter.route("/")
+.post(jsonParser, (req, res, next) => {
   const db = req.app.get("db");
   const { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three } = req.body;
-  if (!color_name || !pigment_one || !pigment_two || !pigment_three || !perk_one || !perk_two || !perk_three)
+  if (!color_name)
     return res.status(400).json({ error: "Missing required fields" });
   const product = { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three };
   ColorsService.insertColor(db, product)
@@ -39,12 +40,13 @@ colorsRouter
   .delete(requireAuth, (req, res, next) => {
     const db = req.app.get("db");
     const { color_id } = res.product;
-    colorsService.deleteColor(db, color_id)
+    ColorsService.deleteColor(db, color_id)
       .then(() => res.status(204).end())
       .catch(next);
   })
   .patch(requireAuth, jsonParser, (req, res, next) => {
     const db = req.app.get("db");
+    console.log(req.body)
     const { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three } = req.body;
     const newInfo = { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three };
     if (!color_name && !pigment_one && !pigment_two && !pigment_three && !perk_one && !perk_two && !perk_three)

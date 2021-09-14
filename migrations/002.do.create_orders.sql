@@ -17,9 +17,9 @@ create table if not exists colors(
     pigment_one text, 
     pigment_two text, 
     pigment_three text, 
-    perk_one decimal NOT NULL,
-    perk_two decimal NOT NULL,
-    perk_three decimal NOT NULL
+    perk_one decimal,
+    perk_two decimal,
+    perk_three decimal
 );
 
 
