@@ -38,6 +38,7 @@ colorsRouter
     return res.status(200).json(res.product);
   })
   .delete(requireAuth, (req, res, next) => {
+    console.log("STARTING TO DELETE")
     const db = req.app.get("db");
     const { color_id } = res.product;
     ColorsService.deleteColor(db, color_id)
