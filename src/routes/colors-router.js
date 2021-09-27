@@ -1,21 +1,21 @@
 const express = require("express");
-const ProductsService = require("../services/products-service");
+const ColorsService = require("../services/colors-service");
 const jsonParser = express.json();
-const productsRouter = express.Router();
+const colorsRouter = express.Router();
 const path = require("path");
 const { requireAuth } = require("../middleware/jwt-auth");
 
 
 
 
-productsRouter.route("/")
+colorsRouter.route("/")
 .post(jsonParser, (req, res, next) => {
   const db = req.app.get("db");
-  const { product_name, product_weight } = req.body;
-  if (!product_name || !product_weight)
+  const { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three } = req.body;
+  if (!color_name)
     return res.status(400).json({ error: "Missing required fields" });
-  const product = { product_name, product_weight };
-  ProductsService.insertProduct(db, product)
+  const product = { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three };
+  ColorsService.insertColor(db, product)
     .then((product) =>
       res
         .status(201)
@@ -25,47 +25,48 @@ productsRouter.route("/")
     .catch(next);
 })
 .get((req, res, next) => {
-    ProductsService.getAllProducts(req.app.get("db")).then(products =>
-     res.status(200).json(products)
+    ColorsService.getAllColors(req.app.get("db")).then(colors =>
+     res.status(200).json(colors)
     )
 })
 
 
-productsRouter
+colorsRouter
   .route("/:productId")
-  .all(checkProductExists)
+  .all(checkColorExists)
   .get((req, res, next) => {
     return res.status(200).json(res.product);
   })
   .delete(requireAuth, (req, res, next) => {
+    console.log("STARTING TO DELETE")
     const db = req.app.get("db");
-    const { product_id } = res.product;
-    ProductsService.deleteProduct(db, product_id)
+    const { color_id } = res.product;
+    ColorsService.deleteColor(db, color_id)
       .then(() => res.status(204).end())
       .catch(next);
   })
   .patch(requireAuth, jsonParser, (req, res, next) => {
     const db = req.app.get("db");
-    const { product_name, product_weight } = req.body;
-    const newInfo = { product_name, product_weight };
-    if (!product_name && !product_weight)
+    const { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three } = req.body;
+    const newInfo = { color_name, pigment_one, pigment_two, pigment_three, perk_one, perk_two, perk_three };
+    if (!color_name && !pigment_one && !pigment_two && !pigment_three && !perk_one && !perk_two && !perk_three)
       return res
         .status(400)
         .json({ error: "Must update either product, title, or content" });
-    ProductsService.updateProduct(db, res.product.product_id, newInfo)
+    ColorsService.updateColor(db, res.product.color_id, newInfo)
       .then((product) => {
         return res.status(200).json(product);
       })
       .catch(next);
   });
 
-async function checkProductExists(req, res, next) {
+async function checkColorExists(req, res, next) {
   try {
     const productId = req.params.productId;
     const db = req.app.get("db");
-    const product = await ProductsService.getProductById(db, productId);
+    const product = await ColorsService.getColorById(db, productId);
     if (!product)
-      return res.status(400).json({ error: "Product not found" });
+      return res.status(400).json({ error: "Color not found" });
     res.product = product;
     next();
   } catch (error) {
@@ -73,4 +74,4 @@ async function checkProductExists(req, res, next) {
   }
 }
 
-module.exports = productsRouter;
+module.exports = colorsRouter;

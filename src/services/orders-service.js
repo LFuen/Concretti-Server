@@ -3,6 +3,7 @@ const xss = require("xss");
 
 const OrdersService = {
   getOrderById(db, order_id) {
+    // console.log(order_id)
     return db("orders")
       .select("*")
       .where({ order_id })
