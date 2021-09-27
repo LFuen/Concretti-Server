@@ -62,7 +62,6 @@ const OrdersService = {
   }
   ,
   updateOrder(db, order_id, newOrderInfo) {
-    console.log(order_id, newOrderInfo)
     return db("orders")
       .where({ order_id })
       .update({ ...newOrderInfo })
